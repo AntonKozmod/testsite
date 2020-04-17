@@ -1,5 +1,19 @@
 body {
 	background: #f9e933;
+	font-family: 'Droid sans';
+	font-size: 90%;
+}
+h1, h2, h3, h4 {
+	font-family: Ubuntu;
+	font-size: 120%;
+}
+a {
+	text-decoration: none;
+	color: red;
+}
+a:hover {
+	text-decoration: underline;
+	color: red;
 }
 header, main, footer {
 	min-width: 855px;
@@ -11,6 +25,8 @@ header .container, main .container, footer .container {
 header {
 	background: white;
 	overflow: auto;
+	margin-bottom: 3px;
+	padding: 10px;
 }
 header h1 {
 	float: left;
@@ -23,6 +39,7 @@ header nav {
 main {
 	background: white;
 	overflow: auto;
+	padding: 20px;
 }
 main .text-content {
 	float: left;
@@ -32,8 +49,26 @@ main .lightbulb {
 	float: right;
 	width: 285px;
 }
+main .faq-content {
+	float: left;
+	width: 855px;
+}
+main .faq-content p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+main h2 {
+	font-size: 120%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+main h3 {
+	margin-top: 10px;
+	margin-bottom: 5px;	
+}
 footer {
 	overflow: auto;
+	padding: 10px;
 }
 footer .contact {
 	float: left;
@@ -42,12 +77,4 @@ footer .contact {
 footer .sitemap {
 	float: right;
 	width: 285px;
-}
-body {
-	font-family: 'Droid sans';
-	font-size: 90%;
-}
-h1, h2, h3, h4 {
-	font-family: Ubuntu;
-	font-size: 120%;
 }
