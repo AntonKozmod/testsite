@@ -43,3 +43,9 @@ footer .sitemap {
 	float: right;
 	width: 285px;
 }
+html {
+	font-family: droid-sans;
+}
+h1, h2, h3, h4 {
+	font-family: Ubuntu;
+}
