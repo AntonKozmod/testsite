@@ -78,3 +78,16 @@ footer .sitemap {
 	float: right;
 	width: 285px;
 }
+
+.tabs a span {
+display: inline-block;
+border-radius: 5px 5px 0 0;
+width: 120px;
+margin-right: 10px;
+text-align: center;
+background: #ccc;
+padding: 5px;
+}
+.tabs a span.active {
+	background: #eee
+}
