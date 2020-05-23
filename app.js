@@ -1,13 +1,39 @@
-var main = function () {
+var organizeByTags = function (toDoObjects) { 
+	// создание пустого массива для тегов
+	var tags = [];
+	// перебираем все задачи toDos 
+	toDoObjects.forEach(function (toDo) {
+		// перебираем все теги для каждой задачи 
+		toDo.tags.forEach(function (tag) {
+			// убеждаемся, что этого тега еще нет в массиве
+			if (tags.indexOf(tag) === -1) { 
+				tags.push(tag);
+			}
+		});
+	}); 
+	var tagObjects = tags.map(function (tag) {
+		// здесь мы находим все задачи,
+		// содержащие этот тег
+		var toDosWithTag = []; 
+		toDoObjects.forEach(function (toDo) {
+			// проверка, что результат
+			// indexOf is *не* равен -1
+			if (toDo.tags.indexOf(tag) !== -1) { 
+				toDosWithTag.push(toDo.description);
+			}
+		});
+		// мы связываем каждый тег с объектом, который // содержит название тега и массив
+		return { "name": tag, "toDos": toDosWithTag };
+	});
+	return tagObjects;
+};
+var main = function (toDoObjects) {
 	"use strict";
-	var toDos = [
-		"Закончить писать эту книгу",
-		"Вывести Грейси на прогулку в парк",
-		"Ответить на электронные письма",
-		"Подготовиться к лекции в понедельник",
-		"Обновить несколько новых задач",
-		"Купить продукты"
-	];
+	var toDos = toDoObjects.map(function (toDo) {
+		// просто возвращаем описание
+		// этой задачи
+		return toDo.description;
+	});
 	$(".tabs a span").toArray().forEach(function (element) {
 		// создаем обработчик щелчков для этого элемента
 		$(element).on("click", function() {
@@ -27,17 +53,44 @@ var main = function () {
 					$(".content").append($("<li>").text(todo));
 				});
 			} else if ($element.parent().is(":nth-child(3)")) {
-				$(".content").append(
-				'<input type="text" class="inp">'+
-				'<button class="btn">Добавить</button>'
-			);
-				var newToDo;
-				$('.btn').on('click',function(){
-					newToDo= $('.inp').val();
-					if (newToDo!='') {
-						toDos.push( newToDo);
-						alert('Новое задание "'+newToDo+'" успешно добавлено!');
-						$('.inp').val("");
+				// ЭТО КОД ДЛЯ ВКЛАДКИ ТЕГИ
+				var organizedByTag = organizeByTags(toDoObjects);
+				organizedByTag.forEach(function (tag) {
+					var $tagName = $("<h3>").text(tag.name),
+					$content = $("<ul>");
+					tag.toDos.forEach(function (description) {
+						var $li = $("<li>").text(description);
+						$content.append($li);
+					});
+					$("main .content").append($tagName);
+					$("main .content").append($content);
+				});
+			} else if ($element.parent().is(":nth-child(4)")) {
+				var $input = $("<input>").addClass("description"), 
+				$textInput = $("<p>").text("Введите новую задачу: "),
+				$tagInput = $("<input>").addClass("tags"),
+				$tagLabel = $("<p>").text("Тэги: "),
+				$button = $("<button>").text("+");
+				$("main .content").append($textInput).append($input).append($tagLabel).append($tagInput).append($button); 
+				function btnsend() {
+					var description = $input.val(),
+					// разделение в соответствии с запятыми
+					tags = $tagInput.val().split(","); 
+					toDoObjects.push({"description":description, "tags":tags}); 
+					// обновление toDos
+					toDos = toDoObjects.map(function (toDo) {
+						return toDo.description;
+					});
+					$input.val("");
+					$tagInput.val("");
+					$(".tabs a:first-child span").trigger("click");
+				}
+				$button.on("click", function () {
+					btnsend();
+				});
+				$('.tags').on('keydown',function(e){
+					if (e.which === 13) {
+						btnsend();
 					}
 				});
 			}
@@ -46,4 +99,9 @@ var main = function () {
 	});
 	$(".tabs a:first-child span").trigger("click");
 };
-$(document).ready(main);
+$(document).ready(function() {
+	$.getJSON("todos.json", function (toDoObjects) {
+		// вызов функции main с аргументом в виде объекта toDoObjects
+		main(toDoObjects);
+	});
+});

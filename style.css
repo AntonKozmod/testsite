@@ -91,3 +91,35 @@ padding: 5px;
 .tabs a span.active {
 	background: #eee
 }
+
+.content {
+	background: white;
+	padding-bottom: 10px;
+}
+
+.content li{
+	list-style: none;
+	margin:  10px;
+	padding-left: 5px;
+	box-shadow: 0 0 0 10px #eee;
+}
+
+.content input {
+	width: 85%;
+	height: 36px;
+	margin: 10px;
+	font-family: Jura;
+	text-align: justify;
+	font-size:  24px;
+	box-shadow: 0 0 0 10px #eee;
+}
+.content button {
+	height: 40px;
+	width: 11%;
+	min-width: 90px;
+	font-size: 16px;
+	margin:10px;
+	font-family: Ubuntu;
+	background: white;
+	box-shadow: 0 -3px 0 11px #eee;
+}
